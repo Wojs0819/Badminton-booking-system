@@ -30,6 +30,9 @@
         <java.version>21</java.version>
     </properties>
     <dependencies>
+        <!-- Feature 2: Spring Boot starter dependencies used to implement the REST API endpoints
+             (Spring Data JPA for repositories/ORM, Bean Validation, Spring Web MVC, DevTools,
+             MySQL driver, Lombok for boilerplate-free entities, and BCrypt password hashing). -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -58,6 +61,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
