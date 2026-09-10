@@ -1,0 +1,65 @@
+@if (loading) {
+  <p class="loading-state">Loading...</p>
+} @else if (!venue) {
+  <p class="error-state">Venue not found.</p>
+} @else {
+  <h2>Book {{ venue.name }}</h2>
+  <p class="muted">{{ venue.pricePerHour | currency }} / hour</p>
+
+  @if (!isLoggedIn) {
+    <p class="error-state">Please <a routerLink="/login">login</a> to make a booking.</p>
+  }
+
+  <!-- A8/A9: reactive form with grouped controls (venueId, courtId, bookingDate, startTime, duration) -->
+  <form [formGroup]="bookingForm" (submit)="submitBooking()">
+    <app-booking-date-selector
+      [date]="bookingForm.controls.bookingDate.value"
+      (dateChange)="onDateChange($event)" />
+    @if (bookingForm.controls.bookingDate.touched && bookingForm.controls.bookingDate.hasError('required')) {
+      <small class="error">Date is required.</small>
+    }
+
+    <h3>Select a court</h3>
+    <div class="grid">
+      @for (court of courts; track court.id) {
+        <app-court-card
+          [court]="court"
+          [selectedCourtId]="bookingForm.controls.courtId.value"
+          (courtSelected)="selectCourt($event)" />
+      }
+    </div>
+    @if (bookingForm.controls.courtId.touched && bookingForm.controls.courtId.hasError('required')) {
+      <small class="error">Court is required.</small>
+    }
+
+    <h3>Select a start time</h3>
+    <app-time-slot-list
+      [slots]="timeSlots"
+      [bookedTimes]="bookedTimesForSelectedCourt"
+      [selectedTime]="bookingForm.controls.startTime.value"
+      (timeSelected)="selectTimeSlot($event)" />
+    @if (bookingForm.controls.startTime.touched && bookingForm.controls.startTime.hasError('required')) {
+      <small class="error">Time is required.</small>
+    }
+
+    <div class="form-field duration-field">
+      <label for="duration">Duration (hours)</label>
+      <input id="duration" type="number" min="1" formControlName="duration" />
+      <!-- 9: min-value validator with its own displayed error message -->
+      @if (bookingForm.controls.duration.touched && bookingForm.controls.duration.hasError('min')) {
+        <small class="error">Duration must be at least 1 hour.</small>
+      }
+    </div>
+
+    @if (errorMessage) {
+      <p class="error-state">{{ errorMessage }}</p>
+    }
+    @if (successMessage) {
+      <p class="empty-state">{{ successMessage }}</p>
+    }
+
+    <button class="btn btn-primary" type="submit" [disabled]="submitting || !isLoggedIn">
+      {{ submitting ? 'Booking...' : 'Confirm Booking' }}
+    </button>
+  </form>
+}

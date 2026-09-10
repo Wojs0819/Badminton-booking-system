@@ -57,23 +57,23 @@ public class DataSeeder implements CommandLineRunner {
                 .phone("93456789").role("USER").points(220).build());
 
         Venue riverside = venueRepository.save(Venue.builder()
-                .name("Riverside Badminton Hall").address("12 River Road, Singapore")
+                .name("Riverside Badminton Hall").address("12 Jalan Sungai, Kuala Lumpur")
                 .description("A spacious hall with 4 premium courts near the riverside.")
                 .openingTime(LocalTime.of(8, 0)).closingTime(LocalTime.of(22, 0))
                 .pricePerHour(new BigDecimal("18.00"))
-                .imageUrl("https://example.com/images/riverside.jpg").location("Singapore").build());
+                .imageUrl("https://example.com/images/riverside.jpg").location("Kuala Lumpur").build());
         Venue eastCoast = venueRepository.save(Venue.builder()
-                .name("East Coast Sports Centre").address("88 East Coast Ave, Singapore")
+                .name("East Coast Sports Centre").address("88 Jalan Pantai Timur, Kuantan")
                 .description("Community sports centre with affordable courts.")
                 .openingTime(LocalTime.of(7, 0)).closingTime(LocalTime.of(23, 0))
                 .pricePerHour(new BigDecimal("12.50"))
-                .imageUrl("https://example.com/images/eastcoast.jpg").location("Singapore").build());
+                .imageUrl("https://example.com/images/eastcoast.jpg").location("Kuantan").build());
         Venue jurong = venueRepository.save(Venue.builder()
-                .name("Jurong Badminton Arena").address("5 Jurong West St, Singapore")
+                .name("Petaling Jaya Badminton Arena").address("5 Jalan PJU, Petaling Jaya")
                 .description("Modern arena with tournament-grade flooring.")
                 .openingTime(LocalTime.of(9, 0)).closingTime(LocalTime.of(21, 0))
                 .pricePerHour(new BigDecimal("22.00"))
-                .imageUrl("https://example.com/images/jurong.jpg").location("Singapore").build());
+                .imageUrl("https://example.com/images/jurong.jpg").location("Petaling Jaya").build());
 
         Court riverside1 = courtRepository.save(Court.builder().venue(riverside).courtNumber(1).courtName("Court A").courtType("Indoor").status(Court.Status.AVAILABLE).build());
         courtRepository.save(Court.builder().venue(riverside).courtNumber(2).courtName("Court B").courtType("Indoor").status(Court.Status.AVAILABLE).build());
@@ -102,7 +102,7 @@ public class DataSeeder implements CommandLineRunner {
                 .activityDate(today.plusDays(5)).startTime(LocalTime.of(20, 0)).endTime(LocalTime.of(22, 0))
                 .skillLevel("INTERMEDIATE").maxParticipants(4).status(Activity.Status.OPEN).build());
 
-        competitionRepository.save(Competition.builder().creator(charlie).name("Jurong Open Championship")
+        competitionRepository.save(Competition.builder().creator(charlie).name("Petaling Jaya Open Championship")
                 .description("Annual open badminton tournament.").venue(jurong)
                 .competitionDate(today.plusDays(20)).registrationDeadline(today.plusDays(10))
                 .skillLevel("ADVANCED").maxParticipants(16).status(Competition.Status.OPEN).build());

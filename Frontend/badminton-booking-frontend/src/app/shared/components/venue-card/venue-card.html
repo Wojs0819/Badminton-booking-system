@@ -1,0 +1,12 @@
+<!-- 1: interpolation ({{ }}) + property binding ([src]/[alt]); 2: class binding [class.first-card]; 3: event binding (click) -->
+<article class="card venue-card" [class.first-card]="isFirst" (click)="select()">
+  @if (venue.imageUrl) {
+    <img class="venue-image" [src]="venue.imageUrl" [alt]="venue.name" />
+  }
+  <h3>{{ index + 1 }}. {{ venue.name }}</h3>
+  <p class="muted">{{ venue.address }}</p>
+  <p>{{ venue.pricePerHour | currency }} / hour</p>
+  @if (venue.location) {
+    <span class="status-pill status-open">{{ venue.location }}</span>
+  }
+</article>

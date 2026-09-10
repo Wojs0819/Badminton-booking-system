@@ -1,0 +1,10 @@
+<!-- A2: class binding for selection state + availability state -->
+<div
+  class="card court-card"
+  [class.selected]="court.id === selectedCourtId"
+  [class.available]="court.status === 'AVAILABLE'"
+  (click)="select()">
+  <h4>{{ court.courtName || 'Court ' + court.courtNumber }}</h4>
+  <p class="muted">{{ court.courtType }}</p>
+  <span class="status-pill status-{{ court.status.toLowerCase() }}">{{ court.status }}</span>
+</div>

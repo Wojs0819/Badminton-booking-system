@@ -1,0 +1,34 @@
+<h2>Badminton Venues</h2>
+
+<!-- A1: interpolation + property binding on the filter inputs -->
+<div class="search-bar">
+  <div class="form-field">
+    <label for="location">Location</label>
+    <input
+      id="location"
+      type="text"
+      placeholder="e.g. Kuala Lumpur"
+      [value]="locationFilter"
+      (input)="locationFilter = $any($event.target).value" />
+  </div>
+  <div class="form-field">
+    <label for="maxPrice">Max price / hour</label>
+    <input
+      id="maxPrice"
+      type="number"
+      [value]="maxPriceFilter"
+      (input)="maxPriceFilter = $any($event.target).value ? +$any($event.target).value : null" />
+  </div>
+  <button class="btn btn-primary" (click)="search()">Search</button>
+</div>
+
+<!-- A6: modern @if/@else conditional rendering -->
+@if (loading) {
+  <p class="loading-state">Loading venues...</p>
+} @else if (errorMessage) {
+  <p class="error-state">{{ errorMessage }}</p>
+} @else if (venues.length === 0) {
+  <p class="empty-state">No venues found.</p>
+} @else {
+  <app-venue-list [venues]="venues" (venueSelected)="goToVenue($event)" />
+}

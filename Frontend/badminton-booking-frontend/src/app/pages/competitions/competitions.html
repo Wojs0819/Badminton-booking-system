@@ -1,0 +1,63 @@
+<div class="header-row">
+  <h2>Competitions</h2>
+  @if (isLoggedIn) {
+    <button class="btn btn-primary" (click)="showCreateForm = !showCreateForm">
+      {{ showCreateForm ? 'Cancel' : 'Create Competition' }}
+    </button>
+  }
+</div>
+
+@if (showCreateForm) {
+  <form class="card" [formGroup]="createForm" (submit)="createCompetition()">
+    <div class="form-field">
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" />
+      @if (createForm.controls.name.touched && createForm.controls.name.hasError('required')) {
+        <small class="error">Name is required.</small>
+      }
+    </div>
+    <div class="form-field">
+      <label for="venueId">Venue</label>
+      <select id="venueId" formControlName="venueId">
+        <option [value]="0">Select a venue</option>
+        @for (venue of venues; track venue.id) {
+          <option [value]="venue.id">{{ venue.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-field">
+      <label for="competitionDate">Competition date</label>
+      <input id="competitionDate" type="date" formControlName="competitionDate" />
+    </div>
+    <div class="form-field">
+      <label for="registrationDeadline">Registration deadline</label>
+      <input id="registrationDeadline" type="date" formControlName="registrationDeadline" />
+    </div>
+    <div class="form-field">
+      <label for="skillLevel">Skill level</label>
+      <input id="skillLevel" type="text" formControlName="skillLevel" placeholder="e.g. ADVANCED" />
+    </div>
+    <div class="form-field">
+      <label for="maxParticipants">Max participants</label>
+      <input id="maxParticipants" type="number" min="2" formControlName="maxParticipants" />
+      @if (createForm.controls.maxParticipants.touched && createForm.controls.maxParticipants.hasError('min')) {
+        <small class="error">At least 2 participants required.</small>
+      }
+    </div>
+    <button class="btn btn-primary" type="submit">Save Competition</button>
+  </form>
+}
+
+@if (loading) {
+  <p class="loading-state">Loading competitions...</p>
+} @else if (errorMessage) {
+  <p class="error-state">{{ errorMessage }}</p>
+} @else if (competitions.length === 0) {
+  <p class="empty-state">No competitions found.</p>
+} @else {
+  <div class="grid">
+    @for (competition of competitions; track competition.id) {
+      <app-competition-card [competition]="competition" (view)="viewCompetition($event)" />
+    }
+  </div>
+}

@@ -1,0 +1,20 @@
+@if (loading) {
+  <p class="loading-state">Loading venue...</p>
+} @else if (venue) {
+  <div class="venue-header">
+    <div>
+      <h2>{{ venue.name }}</h2>
+      <p class="muted">{{ venue.address }}</p>
+    </div>
+    <button class="btn btn-primary" (click)="bookNow()">Book Now</button>
+  </div>
+
+  <nav class="tabs">
+    <a routerLink="info" routerLinkActive="active">Info</a>
+    <a routerLink="courts" routerLinkActive="active">Courts</a>
+  </nav>
+
+  <router-outlet />
+} @else {
+  <p class="error-state">{{ errorMessage || 'Venue not found.' }}</p>
+}

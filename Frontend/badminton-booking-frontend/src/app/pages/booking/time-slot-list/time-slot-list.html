@@ -1,0 +1,17 @@
+@if (slots.length === 0) {
+  <p class="empty-state">Select a court to see available time slots.</p>
+} @else {
+  <div class="slot-list">
+    @for (slot of slots; track slot) {
+      <button
+        type="button"
+        class="slot"
+        [class.booked]="bookedTimes.includes(slot)"
+        [class.selected]="slot === selectedTime"
+        [disabled]="bookedTimes.includes(slot)"
+        (click)="select(slot)">
+        {{ slot }}
+      </button>
+    }
+  </div>
+}

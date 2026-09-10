@@ -1,0 +1,14 @@
+@if (loading) {
+  <p class="loading-state">Loading venue info...</p>
+} @else if (errorMessage) {
+  <p class="error-state">{{ errorMessage }}</p>
+} @else if (venue) {
+  <div class="card">
+    <p>{{ venue.description || 'No description provided.' }}</p>
+    <p><strong>Opening hours:</strong> {{ venue.openingTime }} - {{ venue.closingTime }}</p>
+    <p><strong>Price:</strong> {{ venue.pricePerHour | currency }} / hour</p>
+    @if (venue.location) {
+      <p><strong>Location:</strong> {{ venue.location }}</p>
+    }
+  </div>
+}

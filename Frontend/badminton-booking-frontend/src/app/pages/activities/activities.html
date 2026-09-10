@@ -1,0 +1,76 @@
+<div class="header-row">
+  <h2>Activities</h2>
+  @if (isLoggedIn) {
+    <button class="btn btn-primary" (click)="showCreateForm = !showCreateForm">
+      {{ showCreateForm ? 'Cancel' : 'Create Activity' }}
+    </button>
+  }
+</div>
+
+<div class="filter-bar">
+  <label>Skill level:</label>
+  <button class="btn btn-secondary" (click)="filterByLevel('')">All</button>
+  <button class="btn btn-secondary" (click)="filterByLevel('BEGINNER')">Beginner</button>
+  <button class="btn btn-secondary" (click)="filterByLevel('INTERMEDIATE')">Intermediate</button>
+  <button class="btn btn-secondary" (click)="filterByLevel('ADVANCED')">Advanced</button>
+</div>
+
+@if (showCreateForm) {
+  <!-- A8/A9: reactive form with grouped controls + validation for creating an activity -->
+  <form class="card" [formGroup]="createForm" (submit)="createActivity()">
+    <div class="form-field">
+      <label for="title">Title</label>
+      <input id="title" type="text" formControlName="title" />
+      @if (createForm.controls.title.touched && createForm.controls.title.hasError('required')) {
+        <small class="error">Title is required.</small>
+      }
+    </div>
+    <div class="form-field">
+      <label for="venueId">Venue</label>
+      <select id="venueId" formControlName="venueId">
+        <option [value]="0">Select a venue</option>
+        @for (venue of venues; track venue.id) {
+          <option [value]="venue.id">{{ venue.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="form-field">
+      <label for="activityDate">Date</label>
+      <input id="activityDate" type="date" formControlName="activityDate" />
+    </div>
+    <div class="form-field">
+      <label for="startTime">Start time</label>
+      <input id="startTime" type="time" formControlName="startTime" />
+    </div>
+    <div class="form-field">
+      <label for="endTime">End time</label>
+      <input id="endTime" type="time" formControlName="endTime" />
+    </div>
+    <div class="form-field">
+      <label for="skillLevel">Skill level</label>
+      <input id="skillLevel" type="text" formControlName="skillLevel" placeholder="e.g. INTERMEDIATE" />
+    </div>
+    <div class="form-field">
+      <label for="maxParticipants">Max participants</label>
+      <input id="maxParticipants" type="number" min="2" formControlName="maxParticipants" />
+      @if (createForm.controls.maxParticipants.touched && createForm.controls.maxParticipants.hasError('min')) {
+        <small class="error">At least 2 participants required.</small>
+      }
+    </div>
+    <button class="btn btn-primary" type="submit">Save Activity</button>
+  </form>
+}
+
+@if (loading) {
+  <p class="loading-state">Loading activities...</p>
+} @else if (errorMessage) {
+  <p class="error-state">{{ errorMessage }}</p>
+} @else if (activities.length === 0) {
+  <p class="empty-state">No activities found.</p>
+} @else {
+  <div class="grid">
+    @for (activity of activities; track activity.id) {
+      <app-activity-card [activity]="activity" (view)="viewActivity($event)" />
+    }
+  </div>
+}

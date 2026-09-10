@@ -1,0 +1,19 @@
+.court-card {
+  cursor: not-allowed;
+  border: 2px solid var(--color-border);
+  text-align: center;
+}
+
+.court-card.available {
+  cursor: pointer;
+}
+
+.court-card.selected {
+  border-color: var(--color-primary);
+  background: #eefaf1;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}

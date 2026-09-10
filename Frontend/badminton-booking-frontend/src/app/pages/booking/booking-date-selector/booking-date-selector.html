@@ -1,0 +1,8 @@
+<div class="form-field">
+  <label for="bookingDate">Booking date</label>
+  <input
+    id="bookingDate"
+    type="date"
+    [value]="date"
+    (change)="onDateInput($any($event.target).value)" />
+</div>

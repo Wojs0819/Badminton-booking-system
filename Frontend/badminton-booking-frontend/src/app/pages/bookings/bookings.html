@@ -1,0 +1,35 @@
+<h2>My Bookings</h2>
+
+@if (loading) {
+  <p class="loading-state">Loading bookings...</p>
+} @else if (bookings.length === 0) {
+  <p class="empty-state">You have no bookings yet.</p>
+} @else {
+  <div class="grid">
+    @for (booking of bookings; track booking.id) {
+      <div class="card">
+        <h4>{{ booking.venue.name }}</h4>
+        <p class="muted">Court: {{ booking.court.courtName || booking.court.courtNumber }}</p>
+        <p class="muted">{{ booking.bookingDate | date }} · {{ booking.startTime }} - {{ booking.endTime }}</p>
+        <p>{{ booking.totalPrice | currency }}</p>
+
+        <!-- 6: @switch/@case conditional rendering of the booking status -->
+        @switch (booking.status) {
+          @case ('CONFIRMED') {
+            <span class="status-pill status-confirmed">Confirmed</span>
+          }
+          @case ('CANCELLED') {
+            <span class="status-pill status-cancelled">Cancelled</span>
+          }
+          @default {
+            <span class="status-pill status-pending">Pending</span>
+          }
+        }
+
+        @if (booking.status !== 'CANCELLED') {
+          <button class="btn btn-danger" (click)="cancel(booking)">Cancel Booking</button>
+        }
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,42 @@
+@if (loading) {
+  <p class="loading-state">Loading profile...</p>
+} @else if (!user) {
+  <p class="error-state">Please login to view your profile.</p>
+} @else {
+  <h2>My Profile</h2>
+
+  <div class="profile-layout">
+    <form class="card" [formGroup]="profileForm" (submit)="save()">
+      <div class="form-field">
+        <!-- 1: property binding ([value]) displaying the fetched user's email -->
+        <label for="email">Email</label>
+        <input id="email" type="email" [value]="user.email" disabled />
+      </div>
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input id="name" type="text" formControlName="name" />
+        @if (profileForm.controls.name.touched && profileForm.controls.name.hasError('required')) {
+          <small class="error">Name is required.</small>
+        }
+      </div>
+      <div class="form-field">
+        <label for="phone">Phone</label>
+        <input id="phone" type="tel" formControlName="phone" />
+      </div>
+      <div class="form-field">
+        <label for="profileImage">Profile image URL</label>
+        <input id="profileImage" type="text" formControlName="profileImage" />
+      </div>
+
+      @if (successMessage) {
+        <p class="empty-state">{{ successMessage }}</p>
+      }
+
+      <button class="btn btn-primary" type="submit" [disabled]="saving">
+        {{ saving ? 'Saving...' : 'Save Changes' }}
+      </button>
+    </form>
+
+    <app-reward-summary [points]="user.points" />
+  </div>
+}

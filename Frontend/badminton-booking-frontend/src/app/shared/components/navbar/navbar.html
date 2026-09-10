@@ -1,0 +1,21 @@
+<nav class="navbar">
+  <a class="brand" routerLink="/home">🏸 Badminton Booking</a>
+
+  <div class="links">
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/activities" routerLinkActive="active">Activities</a>
+    <a routerLink="/competitions" routerLinkActive="active">Competitions</a>
+
+    @if (isLoggedIn) {
+      <a routerLink="/bookings" routerLinkActive="active">My Bookings</a>
+      <a routerLink="/rewards" routerLinkActive="active">Rewards</a>
+      <a routerLink="/profile" routerLinkActive="active">Profile</a>
+      <span class="user-name">Hi, {{ currentUser?.name }}</span>
+      <!-- 3: event binding responds to the logout button click -->
+      <button class="btn btn-secondary" (click)="logout()">Logout</button>
+    } @else {
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a routerLink="/register" routerLinkActive="active">Register</a>
+    }
+  </div>
+</nav>

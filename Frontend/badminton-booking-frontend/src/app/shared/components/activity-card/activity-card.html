@@ -1,0 +1,22 @@
+<article class="card activity-card" (click)="openDetail()">
+  <h4>{{ activity.title }}</h4>
+  <p class="muted">{{ activity.venue.name }} · {{ activity.activityDate | date }}</p>
+  <p class="muted">{{ activity.startTime }} - {{ activity.endTime }}</p>
+
+  <!-- 6: @switch/@case conditional rendering of the status pill -->
+  @switch (activity.status) {
+    @case ('OPEN') {
+      <span class="status-pill status-open">Open</span>
+    }
+    @case ('FULL') {
+      <span class="status-pill status-full">Full</span>
+    }
+    @default {
+      <span class="status-pill status-closed">Closed</span>
+    }
+  }
+
+  @if (isCreator) {
+    <span class="status-pill status-open">You created this</span>
+  }
+</article>

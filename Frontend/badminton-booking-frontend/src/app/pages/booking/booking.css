@@ -1,0 +1,12 @@
+.muted {
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.duration-field {
+  max-width: 200px;
+}
+
+h3 {
+  margin-top: 1.5rem;
+}

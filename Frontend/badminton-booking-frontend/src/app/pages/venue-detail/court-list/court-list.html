@@ -1,0 +1,13 @@
+@if (loading) {
+  <p class="loading-state">Loading courts...</p>
+} @else if (errorMessage) {
+  <p class="error-state">{{ errorMessage }}</p>
+} @else if (courts.length === 0) {
+  <p class="empty-state">No courts configured for this venue yet.</p>
+} @else {
+  <div class="grid">
+    @for (court of courts; track court.id) {
+      <app-court-card [court]="court" />
+    }
+  </div>
+}

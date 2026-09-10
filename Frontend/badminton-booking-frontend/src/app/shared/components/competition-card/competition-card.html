@@ -1,0 +1,22 @@
+<article class="card competition-card" (click)="openDetail()">
+  <h4>{{ competition.name }}</h4>
+  <p class="muted">{{ competition.venue.name }} · {{ competition.competitionDate | date }}</p>
+  <p class="muted">Register by {{ competition.registrationDeadline | date }}</p>
+
+  <!-- 6: @switch/@case conditional rendering of the status pill -->
+  @switch (competition.status) {
+    @case ('OPEN') {
+      <span class="status-pill status-open">Open</span>
+    }
+    @case ('FULL') {
+      <span class="status-pill status-full">Full</span>
+    }
+    @default {
+      <span class="status-pill status-closed">Closed</span>
+    }
+  }
+
+  @if (isCreator) {
+    <span class="status-pill status-open">You created this</span>
+  }
+</article>

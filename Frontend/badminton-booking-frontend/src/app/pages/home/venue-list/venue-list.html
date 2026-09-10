@@ -1,0 +1,11 @@
+<!-- A7: @for with $index, $count, $first contextual variables, used meaningfully for numbering + first-card styling -->
+<div class="grid">
+  @for (venue of venues; track venue.id; let i = $index; let total = $count; let first = $first) {
+    <app-venue-card
+      [venue]="venue"
+      [index]="i"
+      [isFirst]="first"
+      [attr.aria-label]="'Venue ' + (i + 1) + ' of ' + total"
+      (venueSelected)="venueSelected.emit($event)" />
+  }
+</div>

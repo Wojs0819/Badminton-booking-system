@@ -1,0 +1,46 @@
+@if (loading) {
+  <p class="loading-state">Loading competition...</p>
+} @else if (!competition) {
+  <p class="error-state">Competition not found.</p>
+} @else {
+  <button class="btn btn-secondary" (click)="goBack()">&larr; Back to competitions</button>
+
+  <div class="card">
+    <h2>{{ competition.name }}</h2>
+    <p class="muted">{{ competition.venue.name }} · {{ competition.competitionDate | date }}</p>
+    <p class="muted">Register by {{ competition.registrationDeadline | date }}</p>
+    <p>{{ competition.description }}</p>
+    <p><strong>Skill level:</strong> {{ competition.skillLevel || 'Any' }}</p>
+    <p><strong>Max participants:</strong> {{ competition.maxParticipants }}</p>
+
+    @switch (competition.status) {
+      @case ('OPEN') {
+        <span class="status-pill status-open">Open</span>
+      }
+      @case ('FULL') {
+        <span class="status-pill status-full">Full</span>
+      }
+      @default {
+        <span class="status-pill status-closed">Closed</span>
+      }
+    }
+
+    @if (isCreator) {
+      <p class="empty-state">You created this competition.</p>
+    } @else if (competition.status === 'OPEN') {
+      <div class="actions">
+        <button class="btn btn-primary" (click)="join()">Join Competition</button>
+        <button class="btn btn-secondary" (click)="leave()">Leave Competition</button>
+      </div>
+    } @else {
+      <p class="empty-state">This competition is no longer open.</p>
+    }
+
+    @if (actionMessage) {
+      <p class="empty-state">{{ actionMessage }}</p>
+    }
+    @if (actionError) {
+      <p class="error-state">{{ actionError }}</p>
+    }
+  </div>
+}

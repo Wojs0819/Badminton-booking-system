@@ -1,0 +1,31 @@
+.venue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 1rem;
+}
+
+.tabs a {
+  padding: 0.5rem 0.25rem;
+  text-decoration: none;
+  color: var(--color-text-muted);
+}
+
+.tabs a.active {
+  color: var(--color-primary);
+  font-weight: 700;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}

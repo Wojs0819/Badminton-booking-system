@@ -1,0 +1,31 @@
+<h2>Rewards</h2>
+<p>Your points: <strong>{{ userPoints }}</strong></p>
+
+@if (message) {
+  <p class="empty-state">{{ message }}</p>
+}
+
+@if (loading) {
+  <p class="loading-state">Loading rewards...</p>
+} @else if (rewards.length === 0) {
+  <p class="empty-state">No rewards available.</p>
+} @else {
+  <div class="grid">
+    @for (reward of rewards; track reward.id) {
+      <div class="card reward-card">
+        @if (reward.imageUrl) {
+          <img [src]="reward.imageUrl" [alt]="reward.name" class="reward-image" />
+        }
+        <h4>{{ reward.name }}</h4>
+        <p class="muted">{{ reward.description }}</p>
+        <p><strong>{{ reward.pointsRequired }}</strong> points</p>
+        <button
+          class="btn btn-primary"
+          [disabled]="userPoints < reward.pointsRequired"
+          (click)="redeem(reward)">
+          Redeem
+        </button>
+      </div>
+    }
+  </div>
+}
